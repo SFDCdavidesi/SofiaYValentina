@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sofía y Valentina · Arenas de San Pedro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#F7EFDD;
+    --parchment-deep:#EEE2C7;
+    --bark:#3A2A18;
+    --bark-soft:#7B6248;
+    --acorn:#9C5A26;
+    --acorn-deep:#7C4317;
+    --leaf:#56713C;
+    --leaf-deep:#3F562B;
+    --gold:#D89A2E;
+    --river:#5C8C86;
+    --white:#fffdf8;
+    --shadow:0 14px 32px rgba(58,42,24,.14);
+    --shadow-sm:0 5px 16px rgba(58,42,24,.10);
+    --radius:20px;
+    --radius-sm:13px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Mulish',sans-serif;color:var(--bark);line-height:1.62;
+    background:var(--parchment);
+    background-image:radial-gradient(circle at 18% 12%,rgba(214,154,46,.06),transparent 40%),
+                     radial-gradient(circle at 85% 88%,rgba(86,113,60,.07),transparent 45%);
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;line-height:1.12;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+
+  /* acorn icon */
+  .acorn-ic{display:inline-block;vertical-align:middle}
+  .ac-cap{fill:var(--acorn-deep)}.ac-nut{fill:var(--acorn)}
+  .ac-stem{stroke:var(--acorn-deep);fill:none;stroke-width:3;stroke-linecap:round}
+
+  /* divider sprig */
+  .divider{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 auto;max-width:340px;color:var(--acorn)}
+  .divider .ln{flex:1;height:0;border-top:2px dotted rgba(124,67,23,.4)}
+
+  /* ---------- NAV ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(247,239,221,.9);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(58,42,24,.09)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0}
+  .brand{display:flex;align-items:center;gap:11px;min-width:0}
+  .brand .mark{width:42px;height:50px;flex:0 0 auto;display:grid;place-items:center}
+  .brand .txt{display:flex;flex-direction:column;line-height:1.08;min-width:0}
+  .brand .txt b{font-family:'Fraunces';font-weight:700;font-size:1.05rem;color:var(--bark)}
+  .brand .txt span{font-size:.71rem;color:var(--leaf-deep);font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+  nav.links{display:flex;align-items:center;gap:2px}
+  nav.links a{padding:9px 13px;border-radius:10px;font-weight:700;font-size:.93rem;color:var(--bark-soft);transition:.18s}
+  nav.links a:hover{background:var(--parchment-deep);color:var(--acorn-deep)}
+  .nav-right{display:flex;align-items:center;gap:8px}
+  .cart-btn{position:relative;border:none;cursor:pointer;background:var(--leaf-deep);color:#fff;
+    font-family:'Fraunces';font-weight:600;font-size:.93rem;padding:9px 15px;border-radius:11px;
+    display:flex;align-items:center;gap:8px;transition:.18s}
+  .cart-btn:hover{background:var(--acorn-deep);transform:translateY(-1px)}
+  .cart-count{background:var(--gold);color:var(--bark);font-size:.76rem;font-weight:800;min-width:21px;height:21px;
+    border-radius:999px;display:grid;place-items:center;padding:0 5px;font-family:'Mulish'}
+  .burger{display:none;border:none;background:none;cursor:pointer;font-size:1.6rem;color:var(--bark);padding:4px 8px}
+  .mobile-menu{display:none;flex-direction:column;gap:3px;padding:6px 22px 14px}
+  .mobile-menu a{padding:11px 14px;border-radius:10px;font-weight:700;color:var(--bark)}
+  .mobile-menu a:hover{background:var(--parchment-deep)}
+  .mobile-menu.open{display:flex}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:70px 0 26px}
+  .hero .grid{display:grid;grid-template-columns:1.08fr .92fr;gap:44px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--white);color:var(--acorn-deep);
+    font-weight:800;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;padding:7px 14px 7px 10px;
+    border-radius:999px;box-shadow:var(--shadow-sm);margin-bottom:20px}
+  .hero h1{font-size:clamp(2.4rem,5.4vw,4rem);font-weight:600;margin-bottom:16px}
+  .hero h1 em{font-style:italic;color:var(--acorn)}
+  .hero p.lead{font-size:1.13rem;color:var(--bark-soft);max-width:42ch;margin-bottom:26px;font-weight:600}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{border:none;cursor:pointer;font-family:'Fraunces';font-weight:600;font-size:1rem;padding:13px 24px;
+    border-radius:12px;transition:.18s;display:inline-flex;align-items:center;gap:9px}
+  .btn-primary{background:var(--acorn);color:#fff;box-shadow:0 10px 22px rgba(156,90,38,.32)}
+  .btn-primary:hover{background:var(--acorn-deep);transform:translateY(-2px)}
+  .btn-ghost{background:var(--white);color:var(--bark);box-shadow:var(--shadow-sm)}
+  .btn-ghost:hover{background:var(--parchment-deep);transform:translateY(-2px)}
+
+  /* hero scene */
+  .scene{position:relative;background:var(--white);border-radius:26px;box-shadow:var(--shadow);padding:24px;rotate:1.5deg}
+  .scene .sky{aspect-ratio:4/3;border-radius:16px;overflow:hidden;position:relative;
+    background:linear-gradient(180deg,#bcd6d2 0%,#d9e4c9 48%,#9bb074 100%)}
+  .mtn{position:absolute;bottom:34%;left:0;right:0;height:46%}
+  .mtn svg{width:100%;height:100%}
+  .ground{position:absolute;bottom:0;left:0;right:0;height:34%;background:linear-gradient(180deg,#7d9456,#5d7340)}
+  .scene .castle{position:absolute;bottom:28%;left:50%;transform:translateX(-50%);font-size:2.4rem}
+  .scene .tree{position:absolute;bottom:24%;font-size:2.1rem}
+  .scene .tree.l{left:12%}.scene .tree.r{right:14%;font-size:2.5rem}
+  .scene .river{position:absolute;bottom:6%;left:18%;right:18%;height:6px;border-radius:6px;
+    background:linear-gradient(90deg,transparent,var(--river),transparent);opacity:.85}
+  .scene-cap{text-align:center;font-family:'Fraunces';font-style:italic;color:var(--bark-soft);font-size:.92rem;margin-top:12px}
+  .acorn-float{position:absolute;animation:fall 7s ease-in-out infinite}
+  .acorn-float.a{top:6%;right:4%;animation-delay:0s}
+  .acorn-float.b{bottom:18%;left:-3%;animation-delay:1.8s}
+  @keyframes fall{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-13px) rotate(8deg)}}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:52px 0}
+  .band{background:var(--parchment-deep)}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 34px}
+  .sec-head .kick{display:inline-flex;align-items:center;gap:7px;font-weight:800;color:var(--acorn);
+    text-transform:uppercase;letter-spacing:.11em;font-size:.79rem}
+  .sec-head h2{font-size:clamp(1.9rem,4vw,2.6rem);margin:9px 0 10px}
+  .sec-head p{color:var(--bark-soft);font-weight:600}
+
+  /* feature rows (info) */
+  .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .fcard{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm);transition:.2s}
+  .fcard:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .fcard .ic{font-size:2rem;margin-bottom:10px}
+  .fcard h3{font-size:1.22rem;margin-bottom:7px}
+  .fcard p{font-size:.93rem;color:var(--bark-soft);font-weight:600}
+  .fcard.river-accent{border-top:5px solid var(--river)}
+  .fcard.leaf-accent{border-top:5px solid var(--leaf)}
+  .fcard.acorn-accent{border-top:5px solid var(--acorn)}
+  .fcard.gold-accent{border-top:5px solid var(--gold)}
+
+  /* fun fact strip */
+  .fact{display:flex;gap:14px;align-items:flex-start;background:var(--white);border-radius:var(--radius-sm);
+    padding:16px 20px;box-shadow:var(--shadow-sm);margin-top:22px;border-left:5px solid var(--gold)}
+  .fact .fic{flex:0 0 auto}
+  .fact p{font-weight:600;color:var(--bark)}
+  .fact b{color:var(--acorn-deep)}
+
+  /* ---------- TIENDA ---------- */
+  .products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);
+    display:flex;flex-direction:column;transition:.2s;cursor:pointer}
+  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .photo{aspect-ratio:4/3;display:grid;place-items:center;position:relative}
+  .photo .emoji{font-size:4.4rem;filter:drop-shadow(0 6px 8px rgba(58,42,24,.16))}
+  .photo .tag{position:absolute;top:11px;left:11px;background:rgba(255,253,248,.94);color:var(--acorn-deep);
+    font-weight:800;font-size:.71rem;padding:5px 11px;border-radius:999px}
+  .card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .card h3{font-size:1.16rem}
+  .card .desc{font-size:.89rem;color:var(--bark-soft);font-weight:600;flex:1}
+  .card .foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+  .price{font-family:'Fraunces';font-weight:700;font-size:1.32rem;color:var(--acorn-deep)}
+  .add{border:none;cursor:pointer;background:var(--leaf-deep);color:#fff;font-family:'Fraunces';font-weight:600;
+    padding:9px 15px;border-radius:10px;font-size:.88rem;transition:.18s}
+  .add:hover{background:var(--acorn)}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--bark);color:#fff;padding:44px 0 32px;text-align:center}
+  footer .fbrand{font-family:'Fraunces';font-weight:700;font-size:1.5rem;margin-bottom:8px;display:flex;
+    align-items:center;justify-content:center;gap:10px}
+  footer p{color:rgba(255,255,255,.72);font-weight:600;font-size:.92rem}
+  footer .heart{color:var(--gold);margin-top:14px;font-weight:700}
+
+  /* ---------- CART DRAWER ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(58,42,24,.46);z-index:90;opacity:0;visibility:hidden;transition:.25s}
+  .overlay.show{opacity:1;visibility:visible}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:400px;max-width:92vw;background:var(--parchment);z-index:100;
+    transform:translateX(102%);transition:transform .3s ease;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.18)}
+  .drawer.show{transform:translateX(0)}
+  .dhead{padding:20px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(58,42,24,.1)}
+  .dhead h3{font-size:1.4rem;display:flex;align-items:center;gap:9px}
+  .close-x{border:none;background:var(--white);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:1.2rem;
+    box-shadow:var(--shadow-sm);color:var(--bark);transition:.18s}
+  .close-x:hover{background:var(--parchment-deep);color:var(--acorn-deep)}
+  .ditems{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px}
+  .citem{background:var(--white);border-radius:var(--radius-sm);padding:12px;display:flex;gap:12px;align-items:center;box-shadow:var(--shadow-sm)}
+  .citem .ci-img{width:54px;height:54px;border-radius:11px;display:grid;place-items:center;font-size:1.8rem;flex:0 0 auto}
+  .citem .ci-info{flex:1;min-width:0}
+  .citem .ci-info b{font-family:'Fraunces';font-size:.98rem;display:block}
+  .citem .ci-info .ci-price{color:var(--acorn-deep);font-weight:800;font-size:.88rem}
+  .qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+  .qty button{width:26px;height:26px;border-radius:8px;border:none;background:var(--parchment-deep);cursor:pointer;
+    font-weight:800;font-size:1rem;color:var(--bark);transition:.15s}
+  .qty button:hover{background:var(--acorn);color:#fff}
+  .qty span{font-weight:800;min-width:20px;text-align:center}
+  .ci-remove{border:none;background:none;cursor:pointer;color:var(--bark-soft);font-size:1.1rem;align-self:flex-start}
+  .ci-remove:hover{color:var(--acorn-deep)}
+  .empty{text-align:center;color:var(--bark-soft);font-weight:600;margin:auto;padding:40px 10px}
+  .empty .big{font-size:3rem;display:block;margin-bottom:10px}
+  .dfoot{padding:18px 22px;border-top:1px solid rgba(58,42,24,.1);background:var(--white)}
+  .dfoot .row{display:flex;justify-content:space-between;font-weight:700;margin-bottom:4px;color:var(--bark-soft)}
+  .dfoot .row.total{font-family:'Fraunces';font-size:1.3rem;color:var(--bark);font-weight:700;margin:8px 0 14px}
+  .dfoot .btn{width:100%;justify-content:center}
+
+  /* ---------- MODAL ---------- */
+  .modal{position:fixed;inset:0;z-index:110;display:none;align-items:center;justify-content:center;padding:20px;
+    background:rgba(58,42,24,.5)}
+  .modal.show{display:flex}
+  .modal-box{background:var(--parchment);border-radius:24px;max-width:760px;width:100%;max-height:90vh;overflow-y:auto;
+    box-shadow:var(--shadow);position:relative}
+  .modal-box .close-x{position:absolute;top:16px;right:16px;z-index:5}
+  .pm{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .pm-gallery{padding:26px}
+  .pm-main{aspect-ratio:1/1;border-radius:16px;display:grid;place-items:center;font-size:6.2rem;box-shadow:var(--shadow-sm)}
+  .pm-thumbs{display:flex;gap:10px;margin-top:14px}
+  .pm-thumbs button{flex:1;aspect-ratio:1/1;border-radius:11px;border:3px solid transparent;cursor:pointer;
+    display:grid;place-items:center;font-size:1.7rem;transition:.15s}
+  .pm-thumbs button.active{border-color:var(--acorn)}
+  .pm-info{padding:34px 28px 28px}
+  .pm-info h2{font-size:1.75rem;margin-bottom:6px}
+  .pm-info .pm-price{font-family:'Fraunces';font-weight:700;font-size:1.65rem;color:var(--acorn-deep);margin-bottom:14px}
+  .pm-info p{color:var(--bark-soft);font-weight:600;margin-bottom:20px}
+  .pm-qty{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .pm-qty .qty button{width:34px;height:34px;border-radius:9px}
+  .pm-info .btn{width:100%;justify-content:center}
+
+  /* checkout */
+  .co{padding:30px 32px}
+  .co h2{font-size:1.65rem;margin-bottom:4px}
+  .co .sub{color:var(--bark-soft);font-weight:600;margin-bottom:20px}
+  .co fieldset{border:none;margin-bottom:18px}
+  .co legend{font-family:'Fraunces';font-weight:600;font-size:1.05rem;color:var(--acorn-deep);margin-bottom:10px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-weight:700;font-size:.85rem;margin-bottom:5px;color:var(--bark)}
+  .field input{width:100%;padding:11px 14px;border-radius:11px;border:2px solid var(--parchment-deep);background:var(--white);
+    font-family:'Mulish';font-size:.95rem;font-weight:600;color:var(--bark);transition:.15s}
+  .field input:focus{outline:none;border-color:var(--acorn)}
+  .field input::placeholder{color:rgba(123,98,72,.55)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .co .osum{background:var(--white);border-radius:13px;padding:14px 16px;margin-bottom:18px;box-shadow:var(--shadow-sm)}
+  .co .osum .row{display:flex;justify-content:space-between;font-weight:700;color:var(--bark-soft);font-size:.91rem;margin-bottom:4px}
+  .co .osum .row.tt{font-family:'Fraunces';font-weight:700;color:var(--bark);font-size:1.2rem;margin-top:6px}
+  .co .btn{width:100%;justify-content:center}
+  .co .note{text-align:center;font-size:.8rem;color:var(--bark-soft);margin-top:12px;font-weight:600}
+  .success{padding:46px 34px;text-align:center}
+  .success .big{font-size:3.6rem;animation:pop .5s ease}
+  @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+  .success h2{font-size:1.85rem;margin:14px 0 8px}
+  .success p{color:var(--bark-soft);font-weight:600;margin-bottom:22px}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);z-index:130;
+    background:var(--bark);color:#fff;padding:13px 22px;border-radius:999px;font-weight:700;font-family:'Fraunces';
+    box-shadow:var(--shadow);transition:transform .3s ease;display:flex;align-items:center;gap:8px}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:900px){
+    .hero .grid{grid-template-columns:1fr;gap:34px}
+    .scene{max-width:420px;margin:0 auto}
+    .feat,.products{grid-template-columns:repeat(2,1fr)}
+    .pm{grid-template-columns:1fr}
+    .pm-gallery{padding:22px 22px 0}
+  }
+  @media(max-width:660px){
+    nav.links{display:none}.burger{display:block}
+    .feat,.products{grid-template-columns:1fr}
+    .grid2{grid-template-columns:1fr}
+    .brand .txt span{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="acorn" viewBox="0 0 40 50">
+    <path class="ac-stem" d="M20 3 L20 11"/>
+    <path class="ac-cap" d="M8 22 C8 9 32 9 32 22 C32 24.5 30 26 27.5 26 L12.5 26 C10 26 8 24.5 8 22 Z"/>
+    <path class="ac-nut" d="M11.5 26 L28.5 26 C28.5 40 25 49 20 49 C15 49 11.5 40 11.5 26 Z"/>
+  </symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#inicio">
+      <span class="mark"><svg class="acorn-ic" width="30" height="38"><use href="#acorn"/></svg></span>
+      <span class="txt"><b>Sofía y Valentina</b><span>Arenas de San Pedro</span></span>
+    </a>
+    <nav class="links">
+      <a href="#rios">Ríos</a>
+      <a href="#bosques">Bosques</a>
+      <a href="#historia">Historia</a>
+      <a href="#sabores">Sabores</a>
+      <a href="#tienda">Tienda</a>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="openCart()">🧺 <span>Cesta</span> <span class="cart-count" id="cartCount">0</span></button>
+      <button class="burger" onclick="toggleMenu()" aria-label="Menú">☰</button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#rios" onclick="toggleMenu()">Ríos</a>
+    <a href="#bosques" onclick="toggleMenu()">Bosques</a>
+    <a href="#historia" onclick="toggleMenu()">Historia</a>
+    <a href="#sabores" onclick="toggleMenu()">Sabores</a>
+    <a href="#tienda" onclick="toggleMenu()">Tienda</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow"><svg class="acorn-ic" width="16" height="20"><use href="#acorn"/></svg> Nuestro cuaderno del valle</span>
+      <h1>Bienvenidos a <em>Arenas de San Pedro</em></h1>
+      <p class="lead">Somos Sofía y Valentina, dos primas de un pueblo a los pies de la Sierra de Gredos. Aquí te contamos sus ríos fríos, sus bosques de bellotas, su castillo y sus sabores. Y te enseñamos nuestras artesanías.</p>
+      <div class="hero-cta">
+        <a href="#rios" class="btn btn-primary">Descubrir el pueblo</a>
+        <a href="#tienda" class="btn btn-ghost">Ver la tienda 🧺</a>
+      </div>
+    </div>
+    <div class="scene">
+      <svg class="acorn-ic acorn-float a" width="34" height="42"><use href="#acorn"/></svg>
+      <svg class="acorn-ic acorn-float b" width="28" height="35"><use href="#acorn"/></svg>
+      <div class="sky">
+        <div class="mtn">
+          <svg viewBox="0 0 400 180" preserveAspectRatio="none">
+            <path d="M0 180 L70 70 L120 120 L190 30 L260 110 L320 60 L400 150 L400 180 Z" fill="#8a9a78"/>
+            <path d="M0 180 L60 110 L140 150 L210 90 L300 140 L360 100 L400 160 L400 180 Z" fill="#6f8460" opacity=".9"/>
+          </svg>
+        </div>
+        <div class="ground"></div>
+        <span class="tree l">🌳</span>
+        <span class="castle">🏰</span>
+        <span class="tree r">🌲</span>
+        <div class="river"></div>
+      </div>
+      <div class="scene-cap">El castillo, el bosque y el río Arenal · nuestro hogar</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><span class="ln"></span><svg class="acorn-ic" width="22" height="27"><use href="#acorn"/></svg><span class="ln"></span></div>
+
+<!-- RIOS -->
+<section id="rios">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kick">El agua de Gredos</div>
+      <h2>Ríos y pozas</h2>
+      <p>El agua que baja de la montaña es lo que más nos gusta del verano. ¡Aviso: está helada incluso en agosto!</p>
+    </div>
+    <div class="feat">
+      <div class="fcard river-accent"><div class="ic">🏞️</div><h3>El río Arenal</h3>
+        <p>Nace arriba en la sierra y cruza nuestro pueblo con un agua tan clara que se ve el fondo. En verano es nuestro sitio favorito para refrescarnos.</p></div>
+      <div class="fcard river-accent"><div class="ic">🏊</div><h3>Piscinas naturales</h3>
+        <p>El río se cierra con una compuerta de madera y se forma una piscina enorme, con trampolín y una pradera de césped para tumbarse al sol entre los pinos.</p></div>
+      <div class="fcard river-accent"><div class="ic">💎</div><h3>Charcos secretos</h3>
+        <p>Si sigues el cauce encuentras pozas escondidas como el Pozo Bolegán, con piedras de granito que parecen hamacas. Y el Charco Verde, ¡con agua color esmeralda!</p></div>
+    </div>
+    <div class="fact"><svg class="acorn-ic fic" width="26" height="32"><use href="#acorn"/></svg>
+      <p><b>¿Sabías que…?</b> Todo el mundo llama "puente romano" al puente Aquelcabos que cruza el Arenal, pero en realidad es <b>medieval</b>. Es el mejor sitio para hacerte una foto del pueblo.</p></div>
+  </div>
+</section>
+
+<!-- BOSQUES -->
+<section class="band" id="bosques">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kick"><svg class="acorn-ic" width="14" height="18"><use href="#acorn"/></svg> Por qué nos gustan las bellotas</div>
+      <h2>Bosques y bellotas</h2>
+      <p>Alrededor del pueblo hay pinares, castaños y, sobre todo, robles y encinas. En otoño se llenan de bellotas… ¡por eso son nuestro símbolo!</p>
+    </div>
+    <div class="feat">
+      <div class="fcard acorn-accent"><div class="ic">🌳</div><h3>Robles y encinas</h3>
+        <p>Son los árboles de las bellotas. Una bellota diminuta puede tardar años en convertirse en un roble gigante. La naturaleza tiene mucha paciencia.</p></div>
+      <div class="fcard leaf-accent"><div class="ic">🌰</div><h3>Castaños y pinares</h3>
+        <p>En otoño recogemos castañas y olemos a resina de pino por todas partes. El bosque cambia de color y huele diferente en cada estación.</p></div>
+      <div class="fcard leaf-accent"><div class="ic">🦊</div><h3>Animales del valle</h3>
+        <p>Viven ardillas (¡las reinas de las bellotas!), zorros, búhos, corzos y jabalíes. Si vas en silencio por el bosque, a veces los ves.</p></div>
+    </div>
+    <div class="fact"><svg class="acorn-ic fic" width="26" height="32"><use href="#acorn"/></svg>
+      <p><b>Dato de ardilla:</b> las ardillas esconden bellotas para el invierno y se olvidan de dónde las dejaron. Esas bellotas olvidadas… ¡acaban siendo árboles nuevos! Sin querer, plantan el bosque.</p></div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section id="historia">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kick">Reyes, pintores y cuevas</div>
+      <h2>Un poco de historia</h2>
+      <p>Para ser un pueblo pequeño, en Arenas han pasado cosas muy grandes.</p>
+    </div>
+    <div class="feat">
+      <div class="fcard gold-accent"><div class="ic">🏰</div><h3>El castillo</h3>
+        <p>El Castillo del Condestable Dávalos es de hace más de 600 años, con una gran Torre del Homenaje. También se le llama "de la Triste Condesa" por doña Juana de Pimentel, que vivió aquí.</p></div>
+      <div class="fcard gold-accent"><div class="ic">👑</div><h3>El palacio del Infante</h3>
+        <p>El Infante Don Luis, hijo del rey Felipe V y hermano de Carlos III, mandó construir un palacio enorme. ¡Hasta el famoso pintor Goya vino dos veranos a retratar a su familia!</p></div>
+      <div class="fcard gold-accent"><div class="ic">🕳️</div><h3>Las Cuevas del Águila</h3>
+        <p>A pocos kilómetros hay una cueva descubierta en 1963, llena de estalactitas y estalagmitas. Dentro siempre hace la misma temperatura, haga el tiempo que haga fuera.</p></div>
+    </div>
+    <div class="fact"><svg class="acorn-ic fic" width="26" height="32"><use href="#acorn"/></svg>
+      <p><b>Curiosidad familiar:</b> antes de venir a Arenas, el Infante Don Luis vivió en <b>Boadilla del Monte</b>… ¡el mismo pueblo donde está la casa de nuestra familia! El mundo es un pañuelo.</p></div>
+  </div>
+</section>
+
+<!-- SABORES -->
+<section class="band" id="sabores">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kick">Comida de pueblo</div>
+      <h2>Sabores de Arenas</h2>
+      <p>Aquí se come muy bien. Estos son los platos que no pueden faltar cuando vienen visitas.</p>
+    </div>
+    <div class="feat">
+      <div class="fcard acorn-accent"><div class="ic">🥔</div><h3>Patatas revolconas</h3>
+        <p>El plato estrella: patata machacada con pimentón, que le da ese color naranja, y unos torreznos crujientes por encima. ¡Para mojar pan!</p></div>
+      <div class="fcard acorn-accent"><div class="ic">🥩</div><h3>Ternera de Ávila</h3>
+        <p>La carne de la zona es famosísima. Un buen chuletón a la brasa es la comida perfecta después de un día por la sierra.</p></div>
+      <div class="fcard leaf-accent"><div class="ic">🌰</div><h3>Del bosque a la mesa</h3>
+        <p>Castañas asadas en otoño, higos y cerezas del valle del Tiétar, miel de las colmenas y migas para los días de frío.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIENDA -->
+<section id="tienda">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kick"><svg class="acorn-ic" width="14" height="18"><use href="#acorn"/></svg> Nuestro mercadillo del bosque</div>
+      <h2>La tienda de Sofía y Valentina</h2>
+      <p>Todo está hecho a mano por nosotras e inspirado en Arenas. Toca un producto para ver más fotos y su descripción.</p>
+    </div>
+    <div class="products" id="productGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand"><svg class="acorn-ic" width="22" height="27" style="filter:none"><use href="#acorn"/></svg> Sofía y Valentina Herrero</div>
+    <p>Tienda de demostración · Arenas de San Pedro, Valle del Tiétar (Ávila)</p>
+    <p class="heart">Hecho con 🌰 y mucho cariño entre primas</p>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+<aside class="drawer" id="drawer">
+  <div class="dhead">
+    <h3>Tu cesta 🧺</h3>
+    <button class="close-x" onclick="closeCart()">✕</button>
+  </div>
+  <div class="ditems" id="cartItems"></div>
+  <div class="dfoot" id="cartFoot" style="display:none">
+    <div class="row"><span>Artesanías</span><span id="cartSubtotal">0,00 €</span></div>
+    <div class="row"><span>Envío</span><span>3,00 €</span></div>
+    <div class="row total"><span>Total</span><span id="cartTotal">0,00 €</span></div>
+    <button class="btn btn-primary" onclick="openCheckout()">Tramitar pedido</button>
+  </div>
+</aside>
+
+<!-- PRODUCT MODAL -->
+<div class="modal" id="productModal">
+  <div class="modal-box">
+    <button class="close-x" onclick="closeModal('productModal')">✕</button>
+    <div class="pm">
+      <div class="pm-gallery">
+        <div class="pm-main" id="pmMain"></div>
+        <div class="pm-thumbs" id="pmThumbs"></div>
+      </div>
+      <div class="pm-info">
+        <h2 id="pmName"></h2>
+        <div class="pm-price" id="pmPrice"></div>
+        <p id="pmDesc"></p>
+        <div class="pm-qty">
+          <span style="font-weight:800">Cantidad</span>
+          <div class="qty">
+            <button onclick="pmQty(-1)">−</button><span id="pmQ">1</span><button onclick="pmQty(1)">+</button>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="pmAdd()">Añadir a la cesta 🧺</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-box" style="max-width:560px">
+    <button class="close-x" onclick="closeModal('checkoutModal')">✕</button>
+    <div class="co" id="checkoutBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- DATOS (mock) ---------------- */
+const PRODUCTS = [
+  {id:1,name:"Marcapáginas Bellota",price:4.5,emoji:"🔖",bg:"#EADBBE",tag:"Más vendido",
+   gallery:["🔖","🌰","🍂"],
+   desc:"Marcapáginas pintado a mano con una bellota y una hoja de roble, plastificado para que dure mucho y con una borla de hilo marrón. Perfecto para tu libro favorito."},
+  {id:2,name:"Piedra pintada · El Zorro",price:7,emoji:"🦊",bg:"#E8C9A6",tag:null,
+   gallery:["🦊","🪨","🍃"],
+   desc:"Una piedra del río Arenal pintada a mano con un zorro del bosque. Cada piedra tiene su forma, así que no hay dos iguales. Queda genial de adorno en la estantería."},
+  {id:3,name:"Acuarela · Río Arenal",price:15,emoji:"🏞️",bg:"#BFD9D2",tag:null,
+   gallery:["🏞️","🎨","💧"],
+   desc:"Lámina en acuarela del río con los pinos al fondo, pintada por nosotras. Mide 15×20 cm y va sin marco para que elijas el tuyo. Lista para colgar y soñar con el verano."},
+  {id:4,name:"Pisapapeles Bellota",price:9,emoji:"🌰",bg:"#E4CCA0",tag:"Hecho a mano",
+   gallery:["🌰","🪨","✨"],
+   desc:"Una piedra grande y pesada pintada como una bellota gigante, con barniz brillante. Sujeta tus papeles y deberes sin que se vuelen, y de paso decora la mesa."},
+  {id:5,name:"Acuarela · Castillo Dávalos",price:18,emoji:"🏰",bg:"#E9D4B0",tag:null,
+   gallery:["🏰","🎨","🏞️"],
+   desc:"El castillo de Arenas pintado en acuarela al atardecer, con la Sierra de Gredos detrás. Lámina de 20×25 cm. Un recuerdo bonito de nuestro pueblo para tu pared."},
+  {id:6,name:"Piedra pintada · Búho de Gredos",price:7,emoji:"🦉",bg:"#D9C7AD",tag:null,
+   gallery:["🦉","🪨","🌙"],
+   desc:"Piedra del río pintada con un búho de mirada despierta, el guardián del bosque por la noche. Pintura resistente al agua y barniz protector. Trae buena suerte (dicen)."}
+];
+
+/* ---------------- ESTADO ---------------- */
+let cart=[];let pmCurrent=null;let pmCount=1;
+
+/* ---------------- RENDER ---------------- */
+function money(n){return n.toFixed(2).replace('.',',')+' €';}
+function renderProducts(){
+  document.getElementById('productGrid').innerHTML = PRODUCTS.map(p=>`
+    <div class="card" onclick="openProduct(${p.id})">
+      <div class="photo" style="background:${p.bg}">
+        ${p.tag?`<span class="tag">${p.tag}</span>`:''}
+        <span class="emoji">${p.emoji}</span>
+      </div>
+      <div class="body">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc.split('.')[0]}.</p>
+        <div class="foot">
+          <span class="price">${money(p.price)}</span>
+          <button class="add" onclick="event.stopPropagation();addToCart(${p.id})">Añadir +</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+renderProducts();
+
+/* ---------------- CESTA ---------------- */
+function addToCart(id,qty=1){
+  const it=cart.find(c=>c.id===id);
+  if(it)it.qty+=qty;else cart.push({id,qty});
+  updateCart();
+  showToast('✓ '+PRODUCTS.find(p=>p.id===id).name+' añadido');
+}
+function changeQty(id,d){const it=cart.find(c=>c.id===id);if(!it)return;it.qty+=d;if(it.qty<=0)cart=cart.filter(c=>c.id!==id);updateCart();}
+function removeItem(id){cart=cart.filter(c=>c.id!==id);updateCart();}
+function cartTotals(){let sub=0,count=0;cart.forEach(c=>{const p=PRODUCTS.find(p=>p.id===c.id);sub+=p.price*c.qty;count+=c.qty;});return{sub,count,shipping:cart.length?3:0};}
+function updateCart(){
+  const {sub,count,shipping}=cartTotals();
+  document.getElementById('cartCount').textContent=count;
+  const items=document.getElementById('cartItems'),foot=document.getElementById('cartFoot');
+  if(!cart.length){items.innerHTML=`<div class="empty"><span class="big">🧺</span>Tu cesta está vacía.<br>¡Llévate algo del bosque!</div>`;foot.style.display='none';return;}
+  foot.style.display='block';
+  items.innerHTML=cart.map(c=>{const p=PRODUCTS.find(p=>p.id===c.id);
+    return `<div class="citem">
+      <div class="ci-img" style="background:${p.bg}">${p.emoji}</div>
+      <div class="ci-info"><b>${p.name}</b><span class="ci-price">${money(p.price)}</span>
+        <div class="qty"><button onclick="changeQty(${p.id},-1)">−</button><span>${c.qty}</span><button onclick="changeQty(${p.id},1)">+</button></div>
+      </div>
+      <button class="ci-remove" onclick="removeItem(${p.id})">🗑️</button>
+    </div>`;}).join('');
+  document.getElementById('cartSubtotal').textContent=money(sub);
+  document.getElementById('cartTotal').textContent=money(sub+shipping);
+}
+updateCart();
+
+/* ---------------- DRAWER / MODALES ---------------- */
+function openCart(){document.getElementById('drawer').classList.add('show');document.getElementById('overlay').classList.add('show');}
+function closeCart(){document.getElementById('drawer').classList.remove('show');document.getElementById('overlay').classList.remove('show');}
+function closeAll(){closeCart();['productModal','checkoutModal'].forEach(id=>document.getElementById(id).classList.remove('show'));document.getElementById('overlay').classList.remove('show');}
+function closeModal(id){document.getElementById(id).classList.remove('show');document.getElementById('overlay').classList.remove('show');}
+function openProduct(id){
+  const p=PRODUCTS.find(p=>p.id===id);pmCurrent=p;pmCount=1;
+  document.getElementById('pmName').textContent=p.name;
+  document.getElementById('pmPrice').textContent=money(p.price);
+  document.getElementById('pmDesc').textContent=p.desc;
+  document.getElementById('pmQ').textContent='1';
+  const main=document.getElementById('pmMain');main.style.background=p.bg;main.textContent=p.gallery[0];
+  document.getElementById('pmThumbs').innerHTML=p.gallery.map((g,i)=>`<button class="${i===0?'active':''}" style="background:${p.bg}" onclick="pmThumb(${i})">${g}</button>`).join('');
+  document.getElementById('productModal').classList.add('show');document.getElementById('overlay').classList.add('show');
+}
+function pmThumb(i){document.getElementById('pmMain').textContent=pmCurrent.gallery[i];document.querySelectorAll('#pmThumbs button').forEach((b,j)=>b.classList.toggle('active',i===j));}
+function pmQty(d){pmCount=Math.max(1,pmCount+d);document.getElementById('pmQ').textContent=pmCount;}
+function pmAdd(){addToCart(pmCurrent.id,pmCount);closeModal('productModal');openCart();}
+
+/* checkout */
+function openCheckout(){
+  closeCart();
+  const {sub,shipping}=cartTotals();
+  document.getElementById('checkoutBody').innerHTML=`
+    <h2>Finalizar compra</h2>
+    <p class="sub">Rellena tus datos para completar el pedido.</p>
+    <div class="osum">
+      ${cart.map(c=>{const p=PRODUCTS.find(p=>p.id===c.id);return `<div class="row"><span>${p.emoji} ${p.name} ×${c.qty}</span><span>${money(p.price*c.qty)}</span></div>`}).join('')}
+      <div class="row"><span>Envío</span><span>${money(shipping)}</span></div>
+      <div class="row tt"><span>Total</span><span>${money(sub+shipping)}</span></div>
+    </div>
+    <fieldset>
+      <legend>📦 Datos de envío</legend>
+      <div class="field"><label>Nombre completo</label><input id="f_name" placeholder="Ej. Lucía Martín"></div>
+      <div class="field"><label>Correo electrónico</label><input id="f_email" type="email" placeholder="lucia@ejemplo.com"></div>
+      <div class="field"><label>Dirección</label><input id="f_addr" placeholder="Calle, número, piso"></div>
+      <div class="grid2">
+        <div class="field"><label>Ciudad</label><input id="f_city" placeholder="Ávila"></div>
+        <div class="field"><label>Código postal</label><input id="f_cp" placeholder="05400"></div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>💳 Pago</legend>
+      <div class="field"><label>Número de tarjeta</label><input id="f_card" placeholder="0000 0000 0000 0000"></div>
+      <div class="grid2">
+        <div class="field"><label>Caducidad</label><input id="f_exp" placeholder="MM/AA"></div>
+        <div class="field"><label>CVV</label><input id="f_cvv" placeholder="123"></div>
+      </div>
+    </fieldset>
+    <button class="btn btn-primary" onclick="placeOrder()">Pagar ${money(sub+shipping)} 🌰</button>
+    <p class="note">🔒 Demostración · No se realiza ningún cobro real ni se guardan datos.</p>`;
+  document.getElementById('checkoutModal').classList.add('show');document.getElementById('overlay').classList.add('show');
+}
+function placeOrder(){
+  const name=document.getElementById('f_name').value.trim();
+  const email=document.getElementById('f_email').value.trim();
+  if(!name||!email){showToast('⚠️ Rellena nombre y correo');return;}
+  cart=[];updateCart();
+  document.getElementById('checkoutBody').innerHTML=`
+    <div class="success">
+      <span class="big">🌰</span>
+      <h2>¡Pedido confirmado!</h2>
+      <p>Gracias, ${name}. Te hemos enviado la confirmación a<br><b>${email}</b>.<br>Tus artesanías saldrán pronto desde Arenas de San Pedro. 🍂</p>
+      <button class="btn btn-primary" onclick="closeModal('checkoutModal')">Seguir explorando</button>
+    </div>`;
+}
+
+/* toast + menu */
+let toastT;
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200);}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll();});
+</script>
+</body>
+</html>
